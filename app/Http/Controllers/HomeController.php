@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\book;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -31,9 +31,7 @@ class HomeController extends Controller
         return view('manager');
     }
 
-    public function book(){
-        return view('book-single',[
-            
-        ]);
+    public function test(){
+        return Cookie::get();
     }
 }
