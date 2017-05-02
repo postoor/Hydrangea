@@ -51,6 +51,25 @@ $(function(){
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
+            <form method="POST" action="{{ route('searchISBN') }}">
+                
+                               
+                    <div class="input-group btn-group">
+                        <input id="name" type="text" class="form-control" name="isbn" placeholder="請輸入ISBN">
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-primary" >
+                                Search
+                            </button>
+                        </span>
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
             
                 <div class="panel-heading">Show all books</div>
