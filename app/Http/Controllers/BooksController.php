@@ -6,17 +6,30 @@ use Illuminate\Http\Request;
 use App\book;
 use Validator;
 use App\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
+
 
 class BooksController extends Controller
 {
+    use AuthenticatesUsers;
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return book::simplePaginate(20);
+        
+        //if($this->attemptLogin($request)){
+            return book::simplePaginate(20);
+        /*}else{
+            return ['errors' => 'Please Login!',
+                    'user' => Auth::user(),
+                    'request' => $request
+                    ];
+        }*/
     }
 
     /**
@@ -60,8 +73,12 @@ class BooksController extends Controller
      */
     public function show($id)
     {
-        return ['Info' => book::findOrFail($id), 
-                'Owner' => book::findOrFail($id)->Owner()->get()];
+        //if(Auth::guest()){
+            return ['Info' => book::findOrFail($id), 
+                    'Owner' => book::findOrFail($id)->Owner()->get()];
+        //}else{
+        //    return ['errors' => 'Please Login!'];
+        //}
     }
 
     /**
@@ -73,6 +90,20 @@ class BooksController extends Controller
     public function edit($id)
     {
         //
+    }
+
+    public function search(Request $request)
+    {
+        $isbn = $request->isbn;
+        $result = book::where('isbn', '=', $isbn)->get();
+
+        if($result == "[]"){
+            return 'null';
+        }else{
+            return redirect()->route('book-single', 
+                    ['id' => $result[0]->id]);
+        }
+        
     }
 
     /**
