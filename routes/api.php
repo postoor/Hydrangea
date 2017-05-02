@@ -18,3 +18,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 Route::get('/', 'BooksController@index');
 Route::get('/{id}', 'BooksController@show');
+Route::post('/search', 'BooksController@search')
+        ->name('searchISBN');

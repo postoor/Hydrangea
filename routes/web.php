@@ -18,7 +18,12 @@ Auth::routes();
 Route::get('/home', 'HomeController@index');
 Route::get('/manager', 'HomeController@manager')->name('manager');
 Route::get('/book/{id}', function($id){
-    return view('/book-single', [
+    return view('book-single', [
         'id' => $id
     ]);
-});
+})->name('book-single');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
+Route::get('/test', 'HomeController@test');
