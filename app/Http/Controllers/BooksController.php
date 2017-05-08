@@ -22,14 +22,13 @@ class BooksController extends Controller
     public function index(Request $request)
     {
         
-        //if($this->attemptLogin($request)){
+        if($request->user()){
             return book::simplePaginate(20);
-        /*}else{
-            return ['errors' => 'Please Login!',
-                    'user' => Auth::user(),
-                    'request' => $request
+        }else{
+            return [
+                'errors' => 'Please Login!'
                     ];
-        }*/
+        }
     }
 
     /**
@@ -50,19 +49,21 @@ class BooksController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'isbn' => 'string|unique:books',
-            'title' => 'string',
-            'author' => 'string',
-            'press' => 'string',
-            'location' => 'string',
-            'owner' => 'integer'
-        ]);
+        if($request->user()){
+            $validator = Validator::make($request->all(), [
+                'isbn' => 'string|unique:books',
+                'title' => 'string',
+                'author' => 'string',
+                'press' => 'string',
+                'location' => 'string',
+                'owner' => 'integer'
+            ]);
 
-        if($validator->fails()){
-            return $validator->errors();
+            if($validator->fails()){
+                return $validator->errors();
+            }
+            return book::create($request->all());
         }
-        return book::create($request->all());
     }
 
     /**
@@ -71,14 +72,14 @@ class BooksController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //if(Auth::guest()){
+        if($request->user()){
             return ['Info' => book::findOrFail($id), 
                     'Owner' => book::findOrFail($id)->Owner()->get()];
-        //}else{
-        //    return ['errors' => 'Please Login!'];
-        //}
+        }else{
+            return ['errors' => 'Please Login!'];
+        }
     }
 
     /**
@@ -96,14 +97,16 @@ class BooksController extends Controller
     {
         $isbn = $request->isbn;
         $result = book::where('isbn', '=', $isbn)->get();
-
-        if($result == "[]"){
-            return 'null';
+        if($request->user()){
+            if($result == "[]"){
+                return 'null';
+            }else{
+                return redirect()->route('book-single', 
+                        ['id' => $result[0]->id]);
+            }
         }else{
-            return redirect()->route('book-single', 
-                    ['id' => $result[0]->id]);
+            return ['errors' => 'Please Login!'];
         }
-        
     }
 
     /**
@@ -127,5 +130,11 @@ class BooksController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function test($isbn)
+    {   
+        
+        return $HTML;
     }
 }

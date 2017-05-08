@@ -16,7 +16,3 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('/', 'BooksController@index');
-Route::get('/{id}', 'BooksController@show');
-Route::post('/search', 'BooksController@search')
-        ->name('searchISBN');

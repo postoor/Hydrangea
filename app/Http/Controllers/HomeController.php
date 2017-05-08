@@ -30,8 +30,4 @@ class HomeController extends Controller
     public function manager(){
         return view('manager');
     }
-
-    public function test(){
-        return Cookie::get();
-    }
 }

@@ -24,10 +24,14 @@ if( query.page != undefined ){
 }
 
 $(function(){
-    $.getJSON('/api' + page, function(resp){
+    $.getJSON('{{ route("ShowAll") }}' + page, function(resp){
+        
         for(var index in resp.data){
             var obj = resp.data[index];
-            $('#tbody').append('<tr><td>'+ obj.isbn +'</td><td><a href="/book/'
+            $('#tbody').append('<tr><td>'
+            + obj.isbn 
+            + '</td><td><a href="'
+            + '/book/'
             + obj.id + '">'
             + obj.title +'</td><td>'
             + obj.author + '</td></tr>');
@@ -38,9 +42,9 @@ $(function(){
         }else if(resp.prev_page_url == null){
             $('#btn-pre').hide();
         }else if(resp.prev_page_url){
-            $('#btn-pre').attr('href', resp.prev_page_url.replace('api', '')); 
+            $('#btn-pre').attr('href', resp.prev_page_url.replace('books', '')); 
         }
-        $('#btn-next').attr('href', resp.next_page_url.replace('api', ''));
+        $('#btn-next').attr('href', resp.next_page_url.replace('books', ''));
         
     });
 });
@@ -52,7 +56,7 @@ $(function(){
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <form method="POST" action="{{ route('searchISBN') }}">
-                
+                {{ csrf_field() }}
                                
                     <div class="input-group btn-group">
                         <input id="name" type="text" class="form-control" name="isbn" placeholder="請輸入ISBN">
@@ -66,14 +70,11 @@ $(function(){
         </div>
     </div>
 </div>
-<br>
+<br/>
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-            
-                <div class="panel-heading">Show all books</div>
-
                 <div class="panel-body">
                     <table class="table">
                         <thead>
