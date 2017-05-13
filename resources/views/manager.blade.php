@@ -1,6 +1,27 @@
 @extends('layouts.app')
 
 @section('content')
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <form method="POST" action="{{ route('auto') }}">
+                {{ csrf_field() }}
+                               
+                    <div class="input-group btn-group">
+                        <input id="name" type="text" class="form-control" name="isbn" placeholder="請輸入ISBN">
+                        <span class="input-group-btn">
+                            <button type="submit" class="btn btn-primary" >
+                                Search
+                            </button>
+                        </span>
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>
+<br/>
+
 <div class="container">
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
@@ -14,28 +35,28 @@
                         <div>
                             <label for="isbn" class="col-md-4 control-label">ISBN</label>
                             <div class="col-md-6">
-                                <input id="isbn" type="text" class="form-control" name="isbn">
+                                <input id="isbn" type="text" class="form-control" name="isbn" value="{{ $isbn or '' }}" >
                             </div>
                         </div>
 
                         <div>
                             <label for="title" class="col-md-4 control-label">Title</label>
                             <div class="col-md-6">
-                                <input id="title" type="text" class="form-control" name="title">
+                                <input id="title" type="text" class="form-control" name="title" value="{{ $title or '' }}" >
                             </div>
                         </div>
 
                         <div>
                             <label for="author" class="col-md-4 control-label">Author</label>
                             <div class="col-md-6">
-                                <input id="author" type="text" class="form-control" name="author">
+                                <input id="author" type="text" class="form-control" name="author" value="{{ $author or '' }}" >
                             </div>
                         </div>
 
                         <div>
                             <label for="press" class="col-md-4 control-label">Press</label>
                             <div class="col-md-6">
-                                <input id="press" type="text" class="form-control" name="press">
+                                <input id="press" type="text" class="form-control" name="press" value="{{ $press or '' }}" >
                             </div>
                         </div>
 
