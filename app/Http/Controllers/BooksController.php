@@ -9,7 +9,6 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
-
 class BooksController extends Controller
 {
     use AuthenticatesUsers;
@@ -62,7 +61,9 @@ class BooksController extends Controller
             if($validator->fails()){
                 return $validator->errors();
             }
-            return book::create($request->all());
+            book::create($request->all());
+            return $this->search($request);
+            
         }
     }
 
@@ -91,6 +92,16 @@ class BooksController extends Controller
     public function edit($id)
     {
         //
+    }
+
+    public function auto(Request $request)
+    {
+        $path = storage_path();
+        require "$path/app/public/BookSearch/auto.php";
+        $isbn = $request->input('isbn');
+        $data = getBookInfo($isbn);
+
+        return view('manager', $data);
     }
 
     public function search(Request $request)
@@ -130,11 +141,5 @@ class BooksController extends Controller
     public function destroy($id)
     {
         //
-    }
-
-    public function test($isbn)
-    {   
-        
-        return $HTML;
     }
 }

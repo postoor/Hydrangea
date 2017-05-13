@@ -23,10 +23,10 @@ Route::get('/book/{id}', function($id){
     ]);
 })->name('book-single');
 
+Route::post('/auto', 'BooksController@auto')->name('auto');
+
 #書籍搜尋及顯示功能 2017-05-07 route api無法讀取Client的Request 故轉至route web實現登入使用。
 Route::get('/books', 'BooksController@index')->name('ShowAll');
 Route::get('/books/{id}', 'BooksController@show')->name('ShowOne');
 Route::post('/books/search', 'BooksController@search')
         ->name('searchISBN');
-
-Route::get('/test/{isbn}', 'BooksController@test');
