@@ -41,7 +41,8 @@ $(function(){
             $('#btn-next').hide();
         }else if(resp.prev_page_url == null){
             $('#btn-pre').hide();
-        }else if(resp.prev_page_url){
+        }
+        if(resp.prev_page_url){
             $('#btn-pre').attr('href', resp.prev_page_url.replace('books', '')); 
         }
         $('#btn-next').attr('href', resp.next_page_url.replace('books', ''));
