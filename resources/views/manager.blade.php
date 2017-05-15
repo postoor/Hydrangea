@@ -9,10 +9,10 @@
                 {{ csrf_field() }}
                                
                     <div class="input-group btn-group">
-                        <input id="name" type="text" class="form-control" name="isbn" placeholder="請輸入ISBN">
+                        <input id="isbn-search" type="text" class="form-control" name="isbn" placeholder="請輸入ISBN">
                         <span class="input-group-btn">
                             <button type="submit" class="btn btn-primary" >
-                                Search
+                                搜尋博客來
                             </button>
                         </span>
                     </div>

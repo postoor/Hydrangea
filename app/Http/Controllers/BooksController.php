@@ -22,7 +22,7 @@ class BooksController extends Controller
     {
         
         if($request->user()){
-            return book::simplePaginate(20);
+            return book::paginate(20);
         }else{
             return [
                 'errors' => 'Please Login!'
